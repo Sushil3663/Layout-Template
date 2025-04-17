@@ -6,11 +6,16 @@ import Header from "./header";
 import Sidebar from "./sidebar";
 import { ProtectedRouterWrapper } from "../constants/style/common.styled";
 import RoutesContainer from "../routes/routesContainer";
+import { useLocation } from "react-router-dom";
 
 const { Content } = Layout;
 
 const Template: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+
+  const location = useLocation();
+
+  console.log(location?.pathname);
 
   return (
     <>
@@ -18,12 +23,14 @@ const Template: React.FC = () => {
         <Header collapsed={collapsed} setCollapsed={setCollapsed} />
 
         <Layout>
-          <Sidebar collapsed={collapsed} />
+          {location?.pathname !== "/profile" && (
+            <Sidebar collapsed={collapsed} />
+          )}
 
           <Content
             style={{
-              padding: 24,
-              minHeight: "calc(-130px + 100vh)",
+              padding: 15,
+              minHeight: "calc(-65px + 100vh)",
               background: COLORS.backgroundColor,
             }}
           >

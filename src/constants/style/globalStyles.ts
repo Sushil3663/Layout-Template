@@ -55,7 +55,9 @@ export default createGlobalStyle`
     
   }
 
-
+.ant-tabs-tab {
+  margin-right: 100px; /* Adjust the spacing as needed */
+}
   
 
   th.ant-table-cell {

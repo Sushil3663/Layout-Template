@@ -2,12 +2,11 @@
 import { Flex, Layout, Menu } from "antd";
 
 import { COLORS } from "../../constants/style/colors";
-import { RouteList } from "../../routes/routesList";
 import { useLocation, useNavigate } from "react-router-dom";
+import { SidebarList } from "../../routes/SidebarList";
 interface IProps {
   collapsed: boolean;
 }
-
 
 const Sidebar = ({ collapsed }: IProps) => {
   const { Sider } = Layout;
@@ -15,13 +14,13 @@ const Sidebar = ({ collapsed }: IProps) => {
   const location = useLocation();
 
   const findSelectedKey = (
-    routes:any,
+    routes: any,
     currentPath: string
   ): string | undefined => {
     for (const route of routes) {
       if (route.path === currentPath) return route.path;
       if (route.children) {
-        const child = route.children.find((c:any) => c.path === currentPath);
+        const child = route.children.find((c: any) => c.path === currentPath);
         if (child) return child.path;
       }
     }
@@ -29,29 +28,29 @@ const Sidebar = ({ collapsed }: IProps) => {
   };
 
   const findOpenKey = (
-    routes:any,
+    routes: any,
     currentPath: string
   ): string | undefined => {
     for (const route of routes) {
-      if (route.children?.some((child:any) => child.path === currentPath)) {
+      if (route.children?.some((child: any) => child.path === currentPath)) {
         return route.pathname;
       }
     }
     return undefined;
   };
 
-  const openKey = findOpenKey(RouteList, location.pathname);
+  const openKey = findOpenKey(SidebarList, location.pathname);
 
-  const selectedKey = findSelectedKey(RouteList, location.pathname);
+  const selectedKey = findSelectedKey(SidebarList, location.pathname);
 
-  const buildMenuItems = (routes:any) =>
-    routes.map((route:any) => {
+  const buildMenuItems = (routes: any) =>
+    routes.map((route: any) => {
       if (route?.children) {
         return {
           key: route.pathname,
           icon: <route.icon />,
           label: route.pathname,
-          children: route?.children?.map((child:any) => ({
+          children: route?.children?.map((child: any) => ({
             key: child.path,
             icon: <child.icon />,
             label: child.pathname,
@@ -62,7 +61,11 @@ const Sidebar = ({ collapsed }: IProps) => {
       return {
         key: route.path,
         // icon: route.icon ? <route.icon /> : null,
-        label: <Flex justify="center" align="center">{route.pathname}</Flex>,
+        label: (
+          <Flex justify="center" align="center">
+            {route.pathname}
+          </Flex>
+        ),
       };
     });
   return (
@@ -76,10 +79,10 @@ const Sidebar = ({ collapsed }: IProps) => {
           background: COLORS.White,
           minWidth: 80,
           overflow: "auto",
-          height: "60vh",
-          marginTop: "12rem",
+          height: "50vh",
+          marginTop: "10rem",
           marginLeft: "2rem",
-          borderRadius: "1rem" 
+          borderRadius: "1rem",
         }}
       >
         {/* <Logo
@@ -98,12 +101,11 @@ const Sidebar = ({ collapsed }: IProps) => {
         <Menu
           theme="light"
           mode="inline"
-          style={{ background: COLORS.White,}}
+          style={{ background: COLORS.White }}
           selectedKeys={[selectedKey || ""]}
           defaultOpenKeys={[openKey || ""]}
           onClick={({ key }) => navigate(key)}
-          items={buildMenuItems(RouteList)}
-          
+          items={buildMenuItems(SidebarList)}
         />
       </Sider>
     </div>
